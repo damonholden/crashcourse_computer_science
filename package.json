@@ -1,0 +1,15 @@
+{
+  "name": "crashcourse_computer_science",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/tsc && node --test ./compiled/*.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "24.7.0",
+    "typescript": "5.9.3"
+  }
+}
