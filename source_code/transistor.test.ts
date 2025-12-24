@@ -16,14 +16,16 @@ describe("transistors", function () {
 
         transistor.depower()
 
-        assert(transistor.powered === false)
+        assert(transistor.input === "off")
+        assert(transistor.output === "off")
     })
 })
 
 function testTransistorInitialisedState(): Transistor {
     const transistor = new Transistor()
 
-    assert(transistor.powered === false, "a transistor should initialise in powered-off state.")
+    assert(transistor.input === "off")
+    assert(transistor.output === "off")
 
     return transistor
 }
@@ -33,7 +35,8 @@ function testTransistorCanBePoweredOn(): Transistor {
 
     transistor.power()
 
-    assert(transistor.powered === true)
+    assert(transistor.input === "on")
+    assert(transistor.output === "on")
 
     return transistor
 }
