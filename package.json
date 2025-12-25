@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/tsc && node --test ./compiled/*.test.js"
+    "test": "./node_modules/.bin/tsc && node --test ./compiled/*.test.js",
+    "watch": "./node_modules/.bin/tsc --watch",
+    "test-watch": "node --test --watch ./compiled/*.test.js"
   },
   "author": "",
   "license": "ISC",
