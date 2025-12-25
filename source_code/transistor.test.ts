@@ -33,6 +33,36 @@ describe("transistors", function () {
         assert(switch_power_switch.switch_state === "on")
         assert(value_storer.input_connector.state === "off")
     })
+
+    test("A transistor's power and switch input should respond to being conntected to positive outputs", function () {
+        const transistor = new Transistor()
+        const power_power_switch = new Power_switch()
+        const switch_power_switch = new Power_switch()
+
+        power_power_switch.switch()
+        switch_power_switch.switch()
+
+        assert(power_power_switch.switch_state === "on")
+        assert(switch_power_switch.switch_state === "on")
+        assert(transistor.power.state === "off")
+        assert(transistor.switch.state === "off")
+        assert(transistor.output_connector.state === "off")
+
+        power_power_switch.output_connector.connect(transistor.power)
+
+        // @ts-ignore - Typescript cannot tell that transistor state is interfaced from connections:
+        assert(transistor.power.state === "on")
+        assert(transistor.switch.state === "off")
+        assert(transistor.output_connector.state === "off")
+
+        switch_power_switch.output_connector.connect(transistor.switch)
+
+        assert(transistor.power.state === "on")
+        // @ts-ignore - Typescript cannot tell that transistor state is interfaced from connections:
+        assert(transistor.switch.state === "on")
+        // @ts-ignore - Typescript cannot tell that transistor state is interfaced from connections:
+        assert(transistor.output_connector.state === "on")
+    })
 })
 
 function test_transistor_with_all_inputs_off() {
