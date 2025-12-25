@@ -1,10 +1,7 @@
 import { Output_connector, Input_connector } from "./connectors"
 
 export class Negative_transistor {
-    power = new Input_connector(this)
-    switch = new Input_connector(this)
-
-    assess_output() {
+    private assess_output = () => {
         if (this.power.state === "on") {
             if (this.switch.state === "off") {
                 this.output_connector.output("on")
@@ -26,6 +23,7 @@ export class Negative_transistor {
 
         throw Error("`power_state` should either be `'on'` or `'off'`")
     }
-
+    power = new Input_connector(this.assess_output)
+    switch = new Input_connector(this.assess_output)
     output_connector = new Output_connector()
 }

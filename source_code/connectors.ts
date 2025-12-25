@@ -1,11 +1,11 @@
 import { on_off_state } from "./types"
 
 export class Input_connector {
-    constructor(parent: { assess_output: () => void }) {
+    constructor(assess_output: () => void) {
         this.input = (value: on_off_state) => {
             this.state = value
 
-            parent.assess_output()
+            assess_output()
         }
     }
 
