@@ -6,11 +6,14 @@ export class Transistor {
             this.output.change_output("on")
         } else if (this.power.state === "off" || this.input.state === "off") {
             this.output.change_output("off")
-        } else
+        } else {
             throw Error("`power_state` and `switch_state` should either be `'on'` or `'off'`")
+        }
     }
 
     power = new Input_connector(this.assess_output)
     input = new Input_connector(this.assess_output)
     output = new Output_connector()
 }
+
+
