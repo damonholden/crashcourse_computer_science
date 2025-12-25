@@ -2,12 +2,8 @@ import { Transistor } from "./transistor";
 import { Power_switch } from "./Power_switch";
 import { describe, test } from "node:test";
 import assert from "assert/strict";
-import { Input_connector } from "./connectors";
+import { Value_storer } from "./ValueStorer";
 
-export class Value_storer {
-    input_connector = new Input_connector(this)
-    assess_output() { }
-}
 
 describe("transistors", function () {
     test("A transistor should output off if both the power input and the switch input are off.", function () {
