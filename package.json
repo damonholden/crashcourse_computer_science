@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/tsc && node --test ./compiled/*.js"
+    "test": "./node_modules/.bin/tsc && node --test ./compiled/*.test.js"
   },
   "author": "",
   "license": "ISC",
