@@ -1,7 +1,7 @@
 import { Output_connector } from "./connectors";
 import { on_off_state } from "./types";
 
-export class Power_switch {
+export class Switch {
     switch_state: on_off_state = "off"
     switch() {
         if (this.switch_state === "off") {
@@ -12,8 +12,8 @@ export class Power_switch {
             throw Error("`switch_state` should either be `'on'` or `'off'`")
         }
 
-        this.output_connector.output(this.switch_state)
+        this.output.change_output(this.switch_state)
     }
 
-    output_connector = new Output_connector()
+    output = new Output_connector()
 }

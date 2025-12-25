@@ -4,12 +4,12 @@ export class Negative_transistor {
     private assess_output = () => {
         if (this.power.state === "on") {
             if (this.switch.state === "off") {
-                this.output_connector.output("on")
+                this.output_connector.change_output("on")
                 return
             }
 
             if (this.switch.state === "on") {
-                this.output_connector.output("off")
+                this.output_connector.change_output("off")
                 return
             }
 
@@ -17,7 +17,7 @@ export class Negative_transistor {
         }
 
         if (this.power.state === "off") {
-            this.output_connector.output("off")
+            this.output_connector.change_output("off")
             return
         }
 

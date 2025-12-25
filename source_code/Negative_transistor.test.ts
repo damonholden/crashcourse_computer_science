@@ -1,5 +1,5 @@
 import { Negative_transistor } from "./Negative_transistor";
-import { Power_switch } from "./Power_switch";
+import { Switch } from "./Power_switch";
 import { describe, test } from "node:test";
 import assert from "assert/strict";
 import { Value_storer } from "./ValueStorer";
@@ -22,7 +22,7 @@ describe("Negative transistors.", function () {
         assert(power_power_switch.switch_state === "on")
         assert(switch_power_switch.switch_state === "off")
 
-        assert(value_storer.input_connector.state === "on")
+        assert(value_storer.input.state === "on")
     })
 
     test("A negative transistor should have a negative output whe the `power` input is negative and the `switch` input is positive.", function () {
@@ -33,19 +33,19 @@ describe("Negative transistors.", function () {
         assert(power_power_switch.switch_state === "off")
         assert(switch_power_switch.switch_state === "on")
 
-        assert(value_storer.input_connector.state === "off")
+        assert(value_storer.input.state === "off")
     })
 })
 
 function test_negative_transistor_with_all_inputs_off() {
     const transistor = new Negative_transistor()
-    const power_power_switch = new Power_switch()
-    const switch_power_switch = new Power_switch()
+    const power_power_switch = new Switch()
+    const switch_power_switch = new Switch()
     const value_storer = new Value_storer()
 
-    power_power_switch.output_connector.connect(transistor.power)
-    switch_power_switch.output_connector.connect(transistor.switch)
-    transistor.output_connector.connect(value_storer.input_connector)
+    power_power_switch.output.connect(transistor.power)
+    switch_power_switch.output.connect(transistor.switch)
+    transistor.output_connector.connect(value_storer.input)
 
     power_power_switch.switch()
     power_power_switch.switch()
@@ -55,7 +55,7 @@ function test_negative_transistor_with_all_inputs_off() {
     assert(switch_power_switch.switch_state === "off")
     assert(power_power_switch.switch_state === "off")
 
-    assert(value_storer.input_connector.state === "off")
+    assert(value_storer.input.state === "off")
 
     return { transistor, power_power_switch, switch_power_switch, value_storer }
 }
@@ -69,7 +69,7 @@ function test_transistor_can_have_a_negative_output_when_all_positive_input() {
     assert(power_power_switch.switch_state === "on")
     assert(switch_power_switch.switch_state === "on")
 
-    assert(value_storer.input_connector.state === "off")
+    assert(value_storer.input.state === "off")
 
     return { transistor, power_power_switch, switch_power_switch, value_storer }
 }
