@@ -9,7 +9,7 @@ export class Value_storer {
     assess_output() { }
 }
 
-describe("transistors", function () {
+describe("Negative transistors.", function () {
     test("A negative transistor should have a negative output if both the power input and the switch input are off.", function () {
         test_negative_transistor_with_all_inputs_off()
     })
@@ -29,7 +29,7 @@ describe("transistors", function () {
         assert(value_storer.input_connector.state === "on")
     })
 
-    test("A negative transistor should have a negative output whe the `power` input is negative and the `switch` input is positive", function () {
+    test("A negative transistor should have a negative output whe the `power` input is negative and the `switch` input is positive.", function () {
         const { switch_power_switch, power_power_switch, value_storer } = test_transistor_can_have_a_negative_output_when_all_positive_input()
 
         power_power_switch.switch()
