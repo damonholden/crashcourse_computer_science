@@ -1,32 +1,23 @@
-type on_off_state = "on" | "off"
+import { Output_connector, Input_connector } from "./connectors"
 
 export class Transistor {
-    input: on_off_state = "off"
-    output: on_off_state = "off"
-
-    power() {
-        this.input = "on"
-
-        this.assess_output()
-    }
-    depower() {
-        this.input = "off"
-
-        this.assess_output()
-    }
+    power = new Input_connector(this)
+    switch = new Input_connector(this)
 
     assess_output() {
-        if (this.input === "on") {
-            this.output = "on"
+        if (this.power.state === "on" && this.switch.state === "on") {
+            this.output_connector.output("on")
             return
         }
 
-        if (this.input === "off") {
-            this.output = "off"
+        if (this.power.state === "off" || this.switch.state === "off") {
+            this.output_connector.output("off")
             return
         }
 
-        throw Error("`input` should either be `'on'` or `'off'`")
+        throw Error("`power_state` and `switch_state` should either be `'on'` or `'off'`")
     }
+
+    output_connector = new Output_connector()
 }
 

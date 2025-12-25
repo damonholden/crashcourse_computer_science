@@ -1,0 +1,1 @@
+export type on_off_state = "on" | "off"

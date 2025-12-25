@@ -1,42 +1,75 @@
 import { Transistor } from "./transistor";
+import { Power_switch } from "./Power_switch";
 import { describe, test } from "node:test";
 import assert from "assert/strict";
+import { Input_connector } from "./connectors";
+
+export class Value_storer {
+    input_connector = new Input_connector(this)
+    assess_output() { }
+}
 
 describe("transistors", function () {
-    test("A transistor should initialise in powered-off state.", function () {
-        testTransistorInitialisedState()
+    test("A transistor should output off if both the power input and the switch input are off.", function () {
+        test_transistor_with_all_inputs_off()
     })
 
-    test("A transistor should change to the powered-on state when the `power_on` method is invoked.", function () {
-        testTransistorCanBePoweredOn()
+    test("A transistor should have a positive output when the `power` and `switch` inputs are both positive.", function () {
+        test_transistor_can_have_a_positive_output()
     })
 
-    test("A transistor in a powered-on state should switch to powered-off state if the `depower` method is called.", function () {
-        const transistor = testTransistorCanBePoweredOn()
+    test("A transistor with a positive output should switch to a negative output when the power-switch is turned off", function () {
+        const { switch_power_switch, power_power_switch, value_storer } = test_transistor_can_have_a_positive_output()
 
-        transistor.depower()
+        switch_power_switch.switch()
 
-        assert(transistor.input === "off")
-        assert(transistor.output === "off")
+        assert(power_power_switch.switch_state === "on")
+        assert(switch_power_switch.switch_state === "off")
+        assert(value_storer.input_connector.state === "off")
+    })
+
+    test("A transistor with a positive output should switch to a negative output when the switch-switch is turned off", function () {
+        const { switch_power_switch, power_power_switch, value_storer } = test_transistor_can_have_a_positive_output()
+
+        power_power_switch.switch()
+
+        assert(power_power_switch.switch_state === "off")
+        assert(switch_power_switch.switch_state === "on")
+        assert(value_storer.input_connector.state === "off")
     })
 })
 
-function testTransistorInitialisedState(): Transistor {
+function test_transistor_with_all_inputs_off() {
     const transistor = new Transistor()
+    const power_power_switch = new Power_switch()
+    const switch_power_switch = new Power_switch()
+    const value_storer = new Value_storer()
 
-    assert(transistor.input === "off")
-    assert(transistor.output === "off")
+    power_power_switch.output_connector.connect(transistor.power)
+    switch_power_switch.output_connector.connect(transistor.switch)
+    transistor.output_connector.connect(value_storer.input_connector)
 
-    return transistor
+    power_power_switch.switch()
+    power_power_switch.switch()
+    switch_power_switch.switch()
+    switch_power_switch.switch()
+
+    assert(switch_power_switch.switch_state === "off")
+    assert(power_power_switch.switch_state === "off")
+    assert(value_storer.input_connector.state === "off")
+
+    return { transistor, power_power_switch, switch_power_switch, value_storer }
 }
 
-function testTransistorCanBePoweredOn(): Transistor {
-    const transistor = testTransistorInitialisedState()
+function test_transistor_can_have_a_positive_output() {
+    const { transistor, power_power_switch, switch_power_switch, value_storer } = test_transistor_with_all_inputs_off()
 
-    transistor.power()
+    power_power_switch.switch()
+    switch_power_switch.switch()
 
-    assert(transistor.input === "on")
-    assert(transistor.output === "on")
+    assert(power_power_switch.switch_state === "on")
+    assert(switch_power_switch.switch_state === "on")
+    assert(value_storer.input_connector.state === "on")
 
-    return transistor
+    return { transistor, power_power_switch, switch_power_switch, value_storer }
 }
